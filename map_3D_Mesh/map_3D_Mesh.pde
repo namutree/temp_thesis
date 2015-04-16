@@ -87,28 +87,30 @@ void draw() {
   fill(255);
 
 
-  //stroke(255,0,0);//,150);
-  fill(255, 0, 0, 150);
+  //,150);
+  //fill(255, 0, 0, 150);
   //shpere, ellispe/////////////////
-  for (int x = 1 ; x<width-1 ; x++) {
-    for (int y= 1 ; y<height-1 ; y++) {
+  stroke(255,0,0);
+  for (int x = 2; x<width-2; x+=2) {
+    for (int y= 2; y<height-2; y+=2) {
 
-      line(x,y,points[x][y], x-1,y-1,points[x-1][y-1]);
-      
-//      pushMatrix();
-//      {
-//        translate(x, y, points[x][y]/2);
-//        line(0, 0, 0, 0, 0, points[x][y]);
-//      }
-//      popMatrix();
+      if(points[x][y] ==0) continue;
+      line(x, y, points[x][y], x-2, y-2, points[x-2][y-2]);
+
+      //      pushMatrix();
+      //      {
+      //        translate(x, y, points[x][y]/2);
+      //        line(0, 0, 0, 0, 0, points[x][y]);
+      //      }
+      //      popMatrix();
     }
+    if (x%50==0) println(x+" / "+width);
   }
-  if (x%50==0) println(x+" / "+width);
-}
-//////////////////////////////
+  //////////////////////////////
 
-//save("../../data/map_3d"+str(degrees(globalRotation.z))+".jpg");
-save("../../data/map_3d_Mesh.jpg");
-//globalRotation.z += PI/6;
-noLoop();
+  //save("../../data/map_3d"+str(degrees(globalRotation.z))+".jpg");
+  save("../../data/map_3d_Mesh"+str(degrees(globalRotation.z))+".jpg");
+  globalRotation.z += PI/6;
+  //noLoop();
 }
+
