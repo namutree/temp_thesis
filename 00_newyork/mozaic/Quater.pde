@@ -19,10 +19,6 @@ class Quater {
   }
 
   void display() {
-    //rect(q01.x, q01.y, w,h);
-    //rect(q02.x, q02.y, w,h);
-    //rect(q03.x, q03.y, w,h);
-    //rect(q04.x, q04.y, w,h);
     noFill();
     rect(x, y, w, h);
   }

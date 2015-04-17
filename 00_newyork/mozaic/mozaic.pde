@@ -1,4 +1,5 @@
 Table table;
+Table mozaicTable;
 float latMax, latMin, lonMax, lonMin;
 int thres;
 ArrayList<Quater> quater = new ArrayList<Quater>();
@@ -6,6 +7,11 @@ int qsize01, qsize02;
 
 void setup() {
   table = loadTable("../../../data/ny/usa_ny_wo_tagNurl.csv", "header");
+  mozaicTable = new Table();
+  mozaicTable.addColumn("x");
+  mozaicTable.addColumn("y");
+  mozaicTable.addColumn("w");
+  mozaicTable.addColumn("h");
   thres = 20;
   qsize01 = 0;
   qsize02 = -1;
@@ -15,8 +21,8 @@ void setup() {
   lonMax= -73.694036;
   lonMin= -74.280432;
 
-  int w = (int)((lonMax - lonMin)*1110*3/2);
-  int h = (int)((latMax - latMin)*1110*3/2);
+  int w = (int)((lonMax - lonMin)*1110*3);
+  int h = (int)((latMax - latMin)*1110*3);
 
   size((int)w, (int)h);
   int a = howmany(0, 0, width, height);
@@ -68,6 +74,17 @@ void draw() {
 // when it done, save and finish it.
   if (qsize02 == qsize01) {
     save("../../../data/ny/mozaic"+str(thres)+".jpg");
+    
+    for(int i=0 ; i<quater.size(); i++){
+      Quater q = quater.get(i);
+      TableRow newRow = mozaicTable.addRow();
+      newRow.setFloat("x", q.x);
+      newRow.setFloat("y", q.y);
+      newRow.setFloat("w", q.w);
+      newRow.setFloat("h", q.h);
+    }
+    saveTable(mozaicTable, "../../../data/ny/mozaicTable.csv");
+ 
     println("done");
     noLoop();
   }
@@ -78,7 +95,7 @@ void draw() {
 int howmany(float x, float y, float w, float h) {
   int count=0;
   for (TableRow t : table.rows ()) {
-    float lat = t.getFloat("lat"); //y
+    float lat = t.getFloat("lat"); // y
     float lon = t.getFloat("lon"); //x
     lat = map(lat, latMin, latMax, height, 0); 
     lon = map(lon, lonMin, lonMax, 0, width);
