@@ -16,7 +16,7 @@ void draw() {
   background(0);
   for (TableRow t : table.rows ()) {
     int id = t.getInt("id"); 
-    if(id<69000) continue;
+    
     String url = t.getString("url"); 
 
     try {
